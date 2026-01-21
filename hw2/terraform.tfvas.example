@@ -1,0 +1,5 @@
+# Example configuration
+# Replace with your own values before running terraform
+
+ssh_cidr = "YOUR_PUBLIC_IP/32"
+ssh_key_name = "YOUR_EXISTING_KEYPAIR_NAME"
