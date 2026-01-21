@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# Terraform local cache/state
+**/.terraform/
+**/terraform.tfstate
+**/terraform.tfstate.backup
+**/.terraform.lock.hcl
+
+# Keep secrets out of git (IP, key name)
+**/terraform.tfvars
