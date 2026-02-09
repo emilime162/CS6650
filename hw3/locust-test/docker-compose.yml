@@ -1,8 +1,12 @@
 services:
   master:
     image: locustio/locust
+    # Port mapping: expose container port 8089 to host port 8089
+    # Format: "host_port:container_port"
     ports:
       - "8089:8089"
+    # Mount the current directory (.) into the container at /mnt/locust
+    # allows Locust inside the container to read your locustfile.py
     volumes:
       - ./:/mnt/locust
     command: >

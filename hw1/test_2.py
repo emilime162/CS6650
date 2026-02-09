@@ -99,7 +99,7 @@ def plot_results(response_times, status_codes):
 
 
 if __name__ == "__main__":
-    EC2_PUBLIC_IP = "52.10.140.127"  
+    EC2_PUBLIC_IP = "34.218.45.197"  
     EC2_URL = f"http://{EC2_PUBLIC_IP}:8080/albums"
 
     # Run the test

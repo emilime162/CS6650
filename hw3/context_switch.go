@@ -18,6 +18,7 @@ func pingPong() (time.Duration, time.Duration) {
 	// Goroutine A: ping -> pong (N times)
 	go func() {
 		for i := 0; i < N; i++ {
+			// "receive a value from the channel ping"
 			<-ping
 			pong <- struct{}{}
 		}
@@ -26,11 +27,14 @@ func pingPong() (time.Duration, time.Duration) {
 	// Goroutine B: pong -> ping (N-1 times), then signal done after last receive
 	go func() {
 		for i := 0; i < N; i++ {
+			// Receive from pong (blocks until A sends)
 			<-pong
 			if i == N-1 {
 				close(done)
 				return
 			}
+			// Send back to ping so A can continue
+
 			ping <- struct{}{}
 		}
 	}()
