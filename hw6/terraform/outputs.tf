@@ -7,3 +7,8 @@ output "ecs_service_name" {
   description = "Name of the running ECS service"
   value       = module.ecs.service_name
 }
+
+output "alb_dns_name" {
+  description = "Use this as your Locust --host"
+  value       = module.alb.alb_dns_name
+}

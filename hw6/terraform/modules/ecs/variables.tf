@@ -40,7 +40,7 @@ variable "log_group_name" {
 
 variable "ecs_count" {
   type        = number
-  default     = 1
+  default     = 2
   description = "Desired Fargate task count"
 }
 
@@ -59,4 +59,14 @@ variable "memory" {
   type        = string
   default     = "512"
   description = "Memory (MiB)"
+}
+
+variable "target_group_arn" {
+  type        = string
+  description = "ARN of the ALB target group to register tasks with"
+}
+
+variable "alb_listener_arn" {
+  type        = string
+  description = "ARN of the ALB listener (used for depends_on ordering)"
 }
