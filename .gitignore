@@ -1,2 +1,15 @@
-# macOS
-.DS_Store
+cat >> .gitignore << 'EOF'
+
+# Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# Archives and Mac files
+*.zip
+*.pages
+EOF
+
+git add .gitignore
+git commit -m "update gitignore: terraform state, zips, pages files".DS_Store
