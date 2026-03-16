@@ -97,6 +97,7 @@ resource "aws_ecs_service" "processor" {
   desired_count   = 1
   launch_type     = "FARGATE"
 
+
   network_configuration {
     subnets         = module.network.private_subnet_ids
     security_groups = [module.network.security_group_id]

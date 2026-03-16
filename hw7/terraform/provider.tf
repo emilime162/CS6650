@@ -1,4 +1,3 @@
-# Specify where to find the AWS & Docker providers
 terraform {
   required_providers {
     aws = {
@@ -12,15 +11,12 @@ terraform {
   }
 }
 
-# Configure AWS credentials & region
 provider "aws" {
-  region     = var.aws_region
+  region = var.aws_region
 }
 
-# Fetch an ECR auth token so Terraform's Docker provider can log in
 data "aws_ecr_authorization_token" "registry" {}
 
-# Configure Docker provider to authenticate against ECR automatically
 provider "docker" {
   registry_auth {
     address  = data.aws_ecr_authorization_token.registry.proxy_endpoint
