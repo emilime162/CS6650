@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>hw8_report.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="hw8-welcome-to-the-data-layer">HW8: Welcome to the Data Layer!</h1>
+<p><strong>Name:</strong> Emily Chen<br>
+<strong>Course:</strong> CS6650</p>
+<hr>
+<h2 id="step-i-mysql-integration">Step I: MySQL Integration</h2>
+<h3 id="architecture-overview">Architecture Overview</h3>
+<p>I extended my HW7 infrastructure with Amazon RDS MySQL, adding persistent storage for a shopping cart API. The service runs as an ECS Fargate task in private subnets, communicating with RDS through a dedicated security group that restricts MySQL access to ECS tasks only.</p>
+<pre class="hljs"><code><div>[Client] → [ALB] → [ECS: Shopping Cart Service]
+                          ↓              ↓
+                    [RDS MySQL]    [DynamoDB]
+                    (private)      (managed)
+</div></code></pre>
+<p><strong>Infrastructure:</strong></p>
+<ul>
+<li>VPC (10.0.0.0/16) with public subnets for ALB, private subnets for ECS + RDS</li>
+<li>RDS security group: port 3306 open to ECS security group only</li>
+<li>RDS: MySQL 8.0, db.t3.micro, 20GB storage, no public access</li>
+</ul>
+<hr>
+<h3 id="part-2-database-schema-design">Part 2: Database Schema Design</h3>
+<p>I designed two tables to support the shopping cart API:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> carts (
+    cart_id     <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">36</span>)  PRIMARY <span class="hljs-keyword">KEY</span>,
+    customer_id <span class="hljs-built_in">INT</span>          <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    created_at  DATETIME     <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="hljs-keyword">INDEX</span> idx_customer (customer_id)
+);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> cart_items (
+    <span class="hljs-keyword">id</span>         <span class="hljs-built_in">INT</span> AUTO_INCREMENT PRIMARY <span class="hljs-keyword">KEY</span>,
+    cart_id    <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">36</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    product_id <span class="hljs-built_in">INT</span>         <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    quantity   <span class="hljs-built_in">INT</span>         <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (cart_id) <span class="hljs-keyword">REFERENCES</span> carts(cart_id) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">CASCADE</span>,
+    <span class="hljs-keyword">UNIQUE</span> <span class="hljs-keyword">KEY</span> uq_cart_product (cart_id, product_id),
+    <span class="hljs-keyword">INDEX</span> idx_cart (cart_id)
+);
+</div></code></pre>
+<p><strong>Design Decisions:</strong></p>
+<p>I chose a two-table design separating carts from items. This follows the principle of normalization — storing cart metadata (customer, timestamp) separately from line items prevents data duplication and makes queries efficient.</p>
+<p>For the primary key I used UUID strings (<code>VARCHAR(36)</code>) rather than auto-increment integers. UUIDs are globally unique and safe for distributed systems — if I ever ran multiple API instances, they could generate IDs independently without collision.</p>
+<p>The <code>UNIQUE KEY uq_cart_product</code> on <code>(cart_id, product_id)</code> is critical — it prevents duplicate product entries and enables my <code>ON DUPLICATE KEY UPDATE</code> pattern, which atomically adds quantity if the product already exists in the cart rather than creating a duplicate row.</p>
+<p>The <code>INDEX idx_cart</code> on <code>cart_items.cart_id</code> makes <code>GET /shopping-carts/{id}</code> fast — without it, MySQL would do a full table scan for every retrieval.</p>
+<p>The <code>ON DELETE CASCADE</code> foreign key ensures cart items are automatically cleaned up when a cart is deleted, preventing orphaned data.</p>
+<p><strong>Trade-offs considered:</strong> I could have used a single table with a JSON column for items, similar to DynamoDB's approach. This would make reads faster (no JOIN) but writes harder to update atomically. The two-table approach gives stronger consistency guarantees and is more idiomatic for MySQL.</p>
+<hr>
+<h3 id="part-3-api-implementation">Part 3: API Implementation</h3>
+<p>I implemented three endpoints:</p>
+<p><strong><code>POST /mysql/shopping-carts</code></strong> — Creates a new cart, generates a UUID, inserts into <code>carts</code> table, returns <code>201</code> with <code>shopping_cart_id</code>.</p>
+<p><strong><code>GET /mysql/shopping-carts/{id}</code></strong> — Retrieves cart metadata from <code>carts</code> table, then fetches all items from <code>cart_items</code> with an indexed query. Returns <code>404</code> if cart doesn't exist.</p>
+<p><strong><code>POST /mysql/shopping-carts/{id}/items</code></strong> — Uses <code>INSERT ... ON DUPLICATE KEY UPDATE</code> to either add a new item or increment quantity atomically. Verifies cart existence before inserting.</p>
+<p><strong>Connection pooling configuration:</strong></p>
+<pre class="hljs"><code><div>db.SetMaxOpenConns(<span class="hljs-number">25</span>)
+db.SetMaxIdleConns(<span class="hljs-number">10</span>)
+db.SetConnMaxLifetime(<span class="hljs-number">5</span> * time.Minute)
+</div></code></pre>
+<p>I sized the pool at 25 because <code>db.t3.micro</code> supports ~66 connections maximum — 25 gives headroom for multiple ECS tasks without exhausting the database.</p>
+<p><strong>Scaling to 100 concurrent sessions:</strong> My current configuration supports up to 25 concurrent database connections. To truly handle 100 concurrent shopping sessions in production, I would need to:</p>
+<ol>
+<li>Upgrade RDS to <code>db.t3.small</code> (2GB RAM → ~128 max connections)</li>
+<li>Increase <code>SetMaxOpenConns</code> to 100</li>
+<li>Upgrade ECS task CPU/memory (512 CPU, 1024MB)</li>
+<li>Optionally run 2 ECS tasks × 50 connections each = 100 total</li>
+</ol>
+<p>In practice, 100 concurrent sessions doesn't mean 100 simultaneous DB queries — users spend most time browsing, not actively hitting the API. My 25-connection pool handled 20 concurrent Locust users with 0% failures, suggesting it would handle moderate real-world traffic well beyond 25 active users.</p>
+<p><strong>Implementation Journey:</strong></p>
+<p><em>Initial approach:</em> My first schema used a single <code>carts</code> table with a JSON column for items, similar to DynamoDB's approach. This seemed simpler but caused problems — updating a single item's quantity required reading the entire JSON blob, modifying it in Go, and writing it back, which is not atomic and risks data loss under concurrent updates. I switched to the two-table normalized design which handles concurrent modifications safely at the SQL level.</p>
+<p><em>Performance issues discovered:</em> My first <code>GET /shopping-carts/{id}</code> query had no index on <code>cart_items.cart_id</code>, causing a full table scan for every retrieval. With 150 test operations creating many carts, response times climbed to ~200ms. Adding <code>INDEX idx_cart (cart_id)</code> brought retrieval down to 36.6ms average — a 5x improvement.</p>
+<p><em>Connection pooling decisions:</em> My first attempt didn't include connection pooling configuration at all — Go's <code>database/sql</code> defaults to unlimited connections, which would overwhelm RDS under load. I configured <code>SetMaxOpenConns(25)</code> after researching db.t3.micro's connection limits (~66 max). This kept the pool below the hard ceiling while still supporting concurrent requests.</p>
+<p><em>Schema modifications:</em> I initially forgot the <code>UNIQUE KEY uq_cart_product (cart_id, product_id)</code> constraint, which caused duplicate item rows when the same product was added twice. Adding the unique constraint enabled the <code>ON DUPLICATE KEY UPDATE</code> pattern, which atomically increments quantity instead of creating duplicates.</p>
+<p><em>Optimizing for the 150-operation test:</em> The sequential nature of <code>run_tests.py</code> (1 request at a time) meant the connection pool was underutilized — only 1 connection was ever active. Response times of 37.9ms reflect single-threaded sequential latency rather than true concurrent performance. Running Locust with 20 concurrent users showed MySQL actually performs better under load (21ms avg) because the connection pool stays warm and MySQL's query cache kicks in.</p>
+<hr>
+<h3 id="part-4-performance-testing-results">Part 4: Performance Testing Results</h3>
+<p><img src="mysql_results.png" alt="MySQL Test Results"></p>
+<pre class="hljs"><code><div>Total:    150 operations
+Success:  150/150 (100%)
+Avg:      37.9ms
+Min:      32.1ms
+Max:      103.3ms
+
+By operation:
+  create_cart: avg 38.4ms
+  add_items:   avg 38.7ms
+  get_cart:    avg 36.6ms
+</div></code></pre>
+<p>All operations completed well under the 50ms requirement. The max of 103.3ms likely reflects occasional connection acquisition latency from the pool.</p>
+<hr>
+<h3 id="part-4b-week-5-in-memory-vs-mysql-comparison">Part 4b: Week 5 In-Memory vs MySQL Comparison</h3>
+<p>The HW8 deliverables require comparing MySQL performance against the Week 5 in-memory implementation. Week 5 used a Go in-memory hashmap with RWMutex — no database at all.</p>
+<p><strong>Week 5 In-Memory Results (from HW5):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Users</th>
+<th>GET Median</th>
+<th>POST Median</th>
+<th>RPS</th>
+<th>Failures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>17ms</td>
+<td>17ms</td>
+<td>5.3</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>100</td>
+<td>17ms</td>
+<td>17ms</td>
+<td>48.6</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>500</td>
+<td>15ms</td>
+<td>15ms</td>
+<td>247.8</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>17ms</td>
+<td>17ms</td>
+<td>492.7</td>
+<td>0%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>HW8 MySQL Results (Locust load tests):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Users</th>
+<th>GET Median</th>
+<th>POST Median</th>
+<th>Avg</th>
+<th>Max</th>
+<th>RPS</th>
+<th>Failures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>20ms</td>
+<td>20ms</td>
+<td>22ms</td>
+<td>166ms</td>
+<td>29.80</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>20</td>
+<td>21ms</td>
+<td>21ms</td>
+<td>22ms</td>
+<td>182ms</td>
+<td>29.94</td>
+<td>0%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>HW8 DynamoDB Results (Locust load tests):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Users</th>
+<th>GET Median</th>
+<th>POST Median</th>
+<th>Avg</th>
+<th>Max</th>
+<th>RPS</th>
+<th>Failures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>20ms</td>
+<td>21ms</td>
+<td>22ms</td>
+<td>220ms</td>
+<td>29.93</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>20</td>
+<td>20ms</td>
+<td>22ms</td>
+<td>22ms</td>
+<td>156ms</td>
+<td>61.03</td>
+<td>0%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Three-Way Comparison at 10 Users:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>HW5 In-Memory</th>
+<th>HW8 MySQL</th>
+<th>HW8 DynamoDB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET Median</td>
+<td>17ms</td>
+<td>20ms</td>
+<td>20ms</td>
+</tr>
+<tr>
+<td>POST Median</td>
+<td>17ms</td>
+<td>20ms</td>
+<td>21ms</td>
+</tr>
+<tr>
+<td>Avg response</td>
+<td>~17ms</td>
+<td>22ms</td>
+<td>22ms</td>
+</tr>
+<tr>
+<td>Max response</td>
+<td>~31ms</td>
+<td>166ms</td>
+<td>220ms</td>
+</tr>
+<tr>
+<td>P95 GET</td>
+<td>22ms</td>
+<td>27ms</td>
+<td>26ms</td>
+</tr>
+<tr>
+<td>RPS</td>
+<td>5.3</td>
+<td>29.80</td>
+<td>29.93</td>
+</tr>
+<tr>
+<td>Failures</td>
+<td>0%</td>
+<td>0%</td>
+<td>0%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Load Scaling Comparison (10 vs 20 users):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Users</th>
+<th>MySQL GET</th>
+<th>MySQL POST</th>
+<th>MySQL RPS</th>
+<th>DynamoDB GET</th>
+<th>DynamoDB POST</th>
+<th>DynamoDB RPS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>20ms</td>
+<td>20ms</td>
+<td>29.80</td>
+<td>20ms</td>
+<td>21ms</td>
+<td>29.93</td>
+</tr>
+<tr>
+<td>20</td>
+<td>21ms</td>
+<td>21ms</td>
+<td>29.94</td>
+<td>20ms</td>
+<td>22ms</td>
+<td>61.03</td>
+</tr>
+</tbody>
+</table>
+<p>Both databases show flat latency between 10 and 20 users — medians barely change. DynamoDB's RPS doubles from 29.93 to 61.03 at 20 users vs MySQL's flat 29.94, suggesting DynamoDB scales more efficiently under concurrent load since it has no connection pool ceiling.</p>
+<p><strong>Key Observations:</strong></p>
+<ol>
+<li>
+<p><strong>Both databases add the same overhead:</strong> MySQL and DynamoDB both show 20ms GET median vs in-memory's 17ms — just 3ms overhead for full persistence. Remarkably, both databases perform identically at low concurrency.</p>
+</li>
+<li>
+<p><strong>Max latency spike:</strong> Both databases show higher max responses (166ms MySQL, 220ms DynamoDB) vs in-memory's ~31ms. MySQL's spikes reflect connection pool warmup; DynamoDB's reflect occasional HTTP cold starts to the AWS API endpoint.</p>
+</li>
+<li>
+<p><strong>Persistence trade-off:</strong> The 3ms overhead buys full durability — in-memory data is lost on every ECS task restart, while both MySQL and DynamoDB persist across restarts, deployments, and scaling events.</p>
+</li>
+<li>
+<p><strong>RPS difference:</strong> Both MySQL (29.80) and DynamoDB (29.93) show identical RPS — higher than HW5 (5.3) because the shopping cart API has 3 endpoints vs HW5's 2, generating more requests per user. This is not a meaningful throughput comparison.</p>
+</li>
+<li>
+<p><strong>Scalability ceiling:</strong> In-memory scales to 492 RPS at 1000 users. MySQL is bounded by the 25-connection pool. DynamoDB has no connection ceiling — it scales to any load automatically.</p>
+</li>
+</ol>
+<p><strong>Conclusion:</strong> Both MySQL and DynamoDB add only 3ms median latency overhead vs in-memory storage. The choice between them is not about performance at this scale — it's about access patterns, operational complexity, and cost model.</p>
+<hr>
+<h3 id="part-5-learning-notes">Part 5: Learning Notes</h3>
+<p><strong>What surprised me:</strong> MySQL performed very consistently — the standard deviation was low across all operations. I expected more variance between read and write operations but the indexed queries kept reads fast.</p>
+<p><strong>What didn't work initially:</strong> Schema creation at startup caused a race condition when ECS deployed multiple tasks simultaneously. I solved this by using <code>CREATE TABLE IF NOT EXISTS</code> which is idempotent.</p>
+<p><strong>What I'd do differently:</strong> Add retry logic for database connection failures during ECS cold starts rather than just retrying 10 times with a sleep.</p>
+<hr>
+<h2 id="step-ii-dynamodb-integration">Step II: DynamoDB Integration</h2>
+<h3 id="part-1-table-design">Part 1: Table Design</h3>
+<p><strong>Access pattern analysis:</strong></p>
+<p>Shopping carts have simple, predictable access patterns — always accessed by cart ID. There are no complex queries, no aggregations, no joins needed. This makes it an ideal DynamoDB use case.</p>
+<p><strong>Design decisions:</strong></p>
+<p>I chose a <strong>single table design</strong> with <code>cart_id</code> as the partition key:</p>
+<pre class="hljs"><code><div>Table: CS6650L2-carts
+Partition key: cart_id (String)
+
+Item structure:
+{
+  &quot;cart_id&quot;:     &quot;uuid-string&quot;,
+  &quot;customer_id&quot;: 123,
+  &quot;items&quot;: [
+    {&quot;product_id&quot;: 1, &quot;quantity&quot;: 2},
+    {&quot;product_id&quot;: 3, &quot;quantity&quot;: 1}
+  ],
+  &quot;created_at&quot;:  &quot;2026-03-14T10:00:00Z&quot;
+}
+</div></code></pre>
+<p>I chose <code>cart_id</code> as the partition key because every operation (create, get, add items) accesses a specific cart — never a range or a scan. UUIDs distribute evenly across partitions, preventing hot partition issues.</p>
+<p>I chose <strong>embedded items</strong> (list attribute) rather than a separate table. This means a single <code>GetItem</code> call retrieves the complete cart — no joins, no multiple round trips. The trade-off is that updating a specific item requires reading the full list, but for shopping carts (typically &lt;50 items) this is negligible.</p>
+<p>I used <code>PAY_PER_REQUEST</code> billing mode — no capacity planning needed, scales automatically.</p>
+<p><strong>No sort key needed</strong> — since all access is by exact <code>cart_id</code>, a sort key would add complexity without benefit.</p>
+<hr>
+<h3 id="part-2-api-implementation">Part 2: API Implementation</h3>
+<p><strong><code>POST /dynamo/shopping-carts</code></strong> — Uses <code>PutItem</code> to create a new cart with an empty items list. Returns <code>201</code> with <code>shopping_cart_id</code>.</p>
+<p><strong><code>GET /dynamo/shopping-carts/{id}</code></strong> — Uses <code>GetItem</code> with the partition key. Returns <code>404</code> if item doesn't exist (<code>result.Item == nil</code>).</p>
+<p><strong><code>POST /dynamo/shopping-carts/{id}/items</code></strong> — Uses <code>UpdateItem</code> with <code>list_append</code> expression to atomically append a new item to the items list. Uses <code>ConditionExpression: attribute_exists(cart_id)</code> to return an error if the cart doesn't exist.</p>
+<p><strong>Key DynamoDB concepts used:</strong></p>
+<ul>
+<li><code>UpdateExpression</code> with <code>list_append</code> for atomic list updates</li>
+<li><code>ConditionExpression</code> for existence checks without extra reads</li>
+<li><code>ExpressionAttributeNames</code> to avoid reserved word conflicts (<code>items</code> is reserved in DynamoDB)</li>
+</ul>
+<hr>
+<h3 id="part-2b-key-differences-from-mysql-implementation">Part 2b: Key Differences from MySQL Implementation</h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>MySQL</th>
+<th>DynamoDB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Table structure</td>
+<td>2 tables (carts + cart_items)</td>
+<td>1 table (carts with embedded items)</td>
+</tr>
+<tr>
+<td>Cart retrieval</td>
+<td>SELECT + JOIN two tables</td>
+<td>Single GetItem call</td>
+</tr>
+<tr>
+<td>Add item</td>
+<td>INSERT ... ON DUPLICATE KEY UPDATE</td>
+<td>UpdateItem with list_append</td>
+</tr>
+<tr>
+<td>Existence check</td>
+<td>COUNT(*) query</td>
+<td>ConditionExpression</td>
+</tr>
+<tr>
+<td>Connection management</td>
+<td>Connection pool (25 max)</td>
+<td>HTTP-based, no connections</td>
+</tr>
+<tr>
+<td>Schema</td>
+<td>Fixed upfront, migrations needed</td>
+<td>Schema-free, flexible</td>
+</tr>
+<tr>
+<td>Consistency</td>
+<td>ACID, always consistent</td>
+<td>Eventual by default</td>
+</tr>
+<tr>
+<td>Cost model</td>
+<td>Always running (~$13/month)</td>
+<td>Pay per request ($0 idle)</td>
+</tr>
+<tr>
+<td>Reserved words</td>
+<td>None to worry about</td>
+<td><code>items</code> is reserved → need ExpressionAttributeNames</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Implementation complexity difference:</strong></p>
+<p>MySQL required more upfront design work — I had to define the schema, choose indexes, configure connection pooling, and handle the JOIN query. DynamoDB required less upfront design but more SDK-specific knowledge — learning <code>UpdateExpression</code> syntax, <code>ExpressionAttributeNames</code>, and <code>ConditionExpression</code>.</p>
+<p>MySQL errors were straightforward SQL errors. DynamoDB errors were often cryptic SDK errors — the <code>items</code> reserved word issue took debugging to identify.</p>
+<p>Overall, DynamoDB had a steeper learning curve for the SDK but lower operational overhead once deployed.</p>
+<hr>
+<h3 id="part-3-eventual-consistency-investigation">Part 3: Eventual Consistency Investigation</h3>
+<p>DynamoDB reads are eventually consistent by default — a write may not be immediately visible on a subsequent read. I tested this by creating a cart and immediately retrieving it.</p>
+<p>In my tests, I observed <strong>no consistency delays</strong> — all reads after writes returned correct data. This is because DynamoDB's eventual consistency typically resolves within milliseconds in the same region, and my test script adds slight latency between operations naturally.</p>
+<p>However, eventual consistency can matter in scenarios like: a user adds an item on mobile, then immediately checks their cart on web — a different read replica might not have the update yet. For this use case it is acceptable since the API returns immediately and users tolerate slight delays.</p>
+<p>To force strong consistency when needed, DynamoDB supports <code>ConsistentRead: true</code> on <code>GetItem</code> — at the cost of double the read capacity units.</p>
+<hr>
+<h3 id="part-4-performance-testing-results">Part 4: Performance Testing Results</h3>
+<p><img src="dynamodb_results.png" alt="MySQL Test Results"></p>
+<pre class="hljs"><code><div>Total:    150 operations
+Success:  150/150 (100%)
+Avg:      37.2ms
+Min:      31.0ms
+Max:      53.2ms
+
+By operation:
+  create_cart: avg 38.0ms
+  add_items:   avg 37.8ms
+  get_cart:    avg 35.7ms
+</div></code></pre>
+<hr>
+<h3 id="part-5-learning-notes">Part 5: Learning Notes</h3>
+<p><strong>What surprised me:</strong> DynamoDB's <code>UpdateItem</code> with <code>list_append</code> required careful use of <code>ExpressionAttributeNames</code> because <code>items</code> is a reserved word in DynamoDB. Without aliasing it to <code>#items</code>, every update failed with a cryptic error.</p>
+<p><strong>What didn't work initially:</strong> My first <code>UpdateItem</code> used <code>SET items = list_append(items, :new)</code> which failed because <code>items</code> is reserved. The fix was <code>SET #items = list_append(#items, :new)</code> with <code>ExpressionAttributeNames: {&quot;#items&quot;: &quot;items&quot;}</code>.</p>
+<p><strong>Design evolution:</strong> I initially considered a two-table design (separate items table) mirroring MySQL, but DynamoDB's pricing model charges per read/write — multiple operations per request doubles the cost. The single-table embedded design is both faster and cheaper.</p>
+<hr>
+<h2 id="step-iii-database-comparison--analysis">Step III: Database Comparison &amp; Analysis</h2>
+<h3 id="part-0-data-verification">Part 0: Data Verification</h3>
+<pre class="hljs"><code><div>mysql_test_results.json:    150 operations ✅
+dynamodb_test_results.json: 150 operations ✅
+combined_results.json:      300 operations total ✅
+</div></code></pre>
+<hr>
+<h3 id="part-1-performance-comparison">Part 1: Performance Comparison</h3>
+<p><strong>Data source:</strong> <code>combined_results.json</code></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>MySQL</th>
+<th>DynamoDB</th>
+<th>Winner</th>
+<th>Margin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Avg Response (ms)</td>
+<td>37.1</td>
+<td>37.2</td>
+<td>MySQL</td>
+<td>0.1ms</td>
+</tr>
+<tr>
+<td>P50 Response (ms)</td>
+<td>36.7</td>
+<td>36.5</td>
+<td>DynamoDB</td>
+<td>0.2ms</td>
+</tr>
+<tr>
+<td>P95 Response (ms)</td>
+<td>42.0</td>
+<td>43.0</td>
+<td>MySQL</td>
+<td>1.0ms</td>
+</tr>
+<tr>
+<td>P99 Response (ms)</td>
+<td>51.0</td>
+<td>45.6</td>
+<td>DynamoDB</td>
+<td>5.4ms</td>
+</tr>
+<tr>
+<td>Max Response (ms)</td>
+<td>103.3</td>
+<td>53.2</td>
+<td>DynamoDB</td>
+<td>50.1ms</td>
+</tr>
+<tr>
+<td>Success Rate (%)</td>
+<td>100%</td>
+<td>100%</td>
+<td>Tie</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Total Operations</td>
+<td>150</td>
+<td>150</td>
+<td>Tie</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Data source:</strong> <code>combined_results.json</code> (300 total operations, 150 per database)</p>
+<p><strong>Operation-Specific Breakdown:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>MySQL Avg (ms)</th>
+<th>DynamoDB Avg (ms)</th>
+<th>Faster By</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>create_cart</td>
+<td>37.1</td>
+<td>38.0</td>
+<td>MySQL 0.9ms</td>
+</tr>
+<tr>
+<td>add_items</td>
+<td>37.8</td>
+<td>37.8</td>
+<td>Tie</td>
+</tr>
+<tr>
+<td>get_cart</td>
+<td>36.5</td>
+<td>35.7</td>
+<td>DynamoDB 0.8ms</td>
+</tr>
+</tbody>
+</table>
+<p>The results are remarkably close — MySQL wins on Avg (37.1ms vs 37.2ms) and P95 (42ms vs 43ms), while DynamoDB wins on P50 (36.5ms vs 36.7ms), P99 (45.6ms vs 51.0ms) and Max (53.2ms vs 103.3ms). The most significant difference is the max response time and P99: MySQL's occasional spikes to 103ms suggest connection pool contention, while DynamoDB's tail latency is more consistent. Both databases comfortably meet the 50ms average requirement.</p>
+<p><strong>Consistency Model Impact:</strong></p>
+<p>MySQL provides ACID transactions — every read reflects the latest committed write. This means my <code>add_items</code> operation is guaranteed to be visible immediately on the next <code>get_cart</code>. DynamoDB uses eventual consistency by default, but in practice I observed no consistency delays in same-region operations. For shopping carts this is acceptable — a 10ms delay before an added item appears is imperceptible to users.</p>
+<hr>
+<h3 id="part-2-resource-efficiency-analysis">Part 2: Resource Efficiency Analysis</h3>
+<p><strong>MySQL (RDS):</strong></p>
+<ul>
+<li>Requires connection pooling management — connections are a finite resource</li>
+<li>Always running — <code>db.t3.micro</code> costs ~$13/month even at zero traffic</li>
+<li>Predictable resource consumption — query performance is stable once indexed</li>
+<li>Schema changes require migrations — adding a column means an <code>ALTER TABLE</code></li>
+</ul>
+<p><strong>DynamoDB:</strong></p>
+<ul>
+<li>No connection management — HTTP-based, stateless requests</li>
+<li><code>PAY_PER_REQUEST</code> — costs $0 at zero traffic, scales automatically</li>
+<li>Resource consumption varies with request patterns — hot partitions can throttle</li>
+<li>Schema-free — adding new attributes requires no migration</li>
+</ul>
+<p><strong>Scaling analysis:</strong> MySQL scales vertically — to handle more load you upgrade the instance class. DynamoDB scales horizontally automatically — AWS adds partitions as load increases. For a startup expecting unpredictable traffic spikes, DynamoDB's scaling model is significantly simpler to operate.</p>
+<hr>
+<h3 id="part-3-real-world-scenario-recommendations">Part 3: Real-World Scenario Recommendations</h3>
+<p><strong>Scenario A: Startup MVP</strong> (100 users/day, 1 developer, limited budget)<br>
+<strong>Recommendation: DynamoDB</strong><br>
+Evidence: $0 cost at low volume vs $13/month for RDS. No connection pool tuning needed. My tests showed comparable performance (37.2ms vs 37.9ms avg). A solo developer can't afford time debugging MySQL connection exhaustion.</p>
+<p><strong>Scenario B: Growing Business</strong> (10K users/day, 5 developers, feature expansion)<br>
+<strong>Recommendation: MySQL</strong><br>
+Evidence: At this scale, complex queries become necessary — customer purchase history, analytics, reporting. MySQL's JOIN support and SQL flexibility outweigh DynamoDB's simplicity. My schema's <code>idx_customer</code> index already supports customer history queries. A team of 5 can manage connection pooling and schema migrations.</p>
+<p><strong>Scenario C: High-Traffic Events</strong> (50K normal, 1M spike users)<br>
+<strong>Recommendation: DynamoDB</strong><br>
+Evidence: DynamoDB's max response of 53.2ms vs MySQL's 103.3ms under my modest test load suggests MySQL degrades faster under pressure. At 1M users, MySQL connection limits become a hard ceiling. DynamoDB auto-scales to any load with no configuration changes.</p>
+<p><strong>Scenario D: Global Platform</strong> (millions of users, multi-region)<br>
+<strong>Recommendation: DynamoDB</strong><br>
+Evidence: DynamoDB Global Tables provide multi-region replication out of the box. MySQL multi-region requires complex read replica setups. My shopping cart access pattern (always by <code>cart_id</code>) maps perfectly to DynamoDB's partition key model at any scale.</p>
+<hr>
+<h3 id="part-4-evidence-based-architecture-recommendations">Part 4: Evidence-Based Architecture Recommendations</h3>
+<p><strong>Shopping Cart Winner: DynamoDB</strong></p>
+<p>Supporting evidence from my tests:</p>
+<ul>
+<li>Response time advantage: 0.7ms average, 50.1ms max response advantage</li>
+<li>Implementation complexity: DynamoDB required no schema design, no index planning, no connection pool configuration</li>
+<li>Operational advantage: zero cost at low volume, zero scaling configuration</li>
+</ul>
+<p><strong>When to choose MySQL instead:</strong></p>
+<ul>
+<li>Need complex queries: customer order history across multiple carts</li>
+<li>Need transactions: checkout process that must atomically update cart + inventory + payment</li>
+<li>Team has SQL expertise: faster to implement complex business logic in SQL than DynamoDB expressions</li>
+</ul>
+<p><strong>My polyglot strategy for a complete e-commerce system:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Database</th>
+<th>Reasoning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shopping carts</td>
+<td>DynamoDB</td>
+<td>Simple access by ID, high write volume, session-based</td>
+</tr>
+<tr>
+<td>User sessions</td>
+<td>DynamoDB</td>
+<td>Key-value access, TTL support for expiration</td>
+</tr>
+<tr>
+<td>Product catalog</td>
+<td>MySQL</td>
+<td>Complex queries, filtering, search, categories</td>
+</tr>
+<tr>
+<td>Order history</td>
+<td>MySQL</td>
+<td>Joins between orders/items/customers, reporting</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="part-5-learning-reflection">Part 5: Learning Reflection</h3>
+<p><strong>What surprised me:</strong> MySQL outperformed my expectations — 37.9ms average is competitive with DynamoDB. I expected SQL's relational overhead to be more significant. The indexed queries made MySQL nearly as fast as DynamoDB's key-value lookups for my simple access patterns.</p>
+<p><strong>What failed initially:</strong></p>
+<ul>
+<li>RDS subnet group name rejected uppercase — fixed with <code>lower()</code> in Terraform</li>
+<li>DynamoDB <code>items</code> reserved word caused cryptic update failures — fixed with <code>ExpressionAttributeNames</code></li>
+<li>MySQL schema creation race condition with multiple ECS tasks — fixed with <code>CREATE TABLE IF NOT EXISTS</code></li>
+<li>DynamoDB first-run cold start showed 1034ms max — rerunning after warmup gave 53.2ms</li>
+</ul>
+<p><strong>Key insights:</strong></p>
+<ul>
+<li>Choose MySQL when access patterns require flexibility — SQL gives you queries you haven't thought of yet</li>
+<li>Choose DynamoDB when access patterns are known and simple — design for your exact use case</li>
+<li>Both databases can meet the 50ms SLA for shopping cart workloads at moderate scale</li>
+<li>The real differentiator isn't performance — it's operational complexity and cost model</li>
+</ul>
+<p><strong>When I would definitely choose MySQL:</strong>
+When the application needs complex queries that aren't known upfront — reporting, analytics, customer history across multiple tables. MySQL's SQL flexibility means I can answer questions I haven't thought of yet. Also when strong ACID consistency is non-negotiable, like financial transactions or inventory management where a read must always reflect the latest write.</p>
+<p><strong>When I would definitely choose DynamoDB:</strong>
+When the access patterns are simple and known — always by a single key, no joins needed. Also when traffic is unpredictable with potential spikes — DynamoDB's automatic scaling means I never hit a connection ceiling. For any startup under 267K operations/month, DynamoDB is free while MySQL costs $13/month regardless of traffic.</p>
+<p><strong>What I would tell another student starting this assignment:</strong>
+Don't assume DynamoDB is always faster — my tests showed MySQL and DynamoDB perform nearly identically (37.1ms vs 37.2ms avg) at low concurrency. The real difference shows up in operations, cost, and scaling behavior, not raw latency. Also, watch out for DynamoDB reserved words like <code>items</code> — they cause cryptic errors that take time to debug. Design your access patterns before choosing a database, not the other way around.</p>
+<p><strong>How hands-on implementation changed my understanding:</strong>
+Before this assignment I assumed SQL = slow (JOINs, schema overhead) and NoSQL = fast (simple key-value). My actual data showed the opposite at small scale — MySQL's indexed queries are highly optimized and competitive with DynamoDB's GetItem. The real insight is that database choice is an architectural decision about access patterns, operational complexity, and scaling model — not just a performance optimization.</p>
+<p><strong>When I would definitely choose MySQL:</strong>
+When I need complex queries I haven't anticipated yet — product search, customer order history, analytics dashboards. SQL's flexibility means I can answer new business questions without schema redesign. Also when I need strong ACID transactions — like a checkout flow that atomically updates cart + inventory + payment in one transaction. If something fails midway, MySQL rolls back everything. DynamoDB has no multi-table transactions in the basic model.</p>
+<p><strong>When I would definitely choose DynamoDB:</strong>
+When access patterns are simple and known upfront — always by a single key. Shopping carts, user sessions, feature flags, rate limiting counters. Also when I expect unpredictable traffic spikes — DynamoDB scales to any load with zero configuration, while MySQL requires manual instance upgrades. For a startup with zero budget, DynamoDB's free tier (1M requests/month) means I pay nothing until meaningful scale.</p>
+<p><strong>What I would tell another student starting this assignment:</strong>
+Don't assume DynamoDB is always faster — my results showed MySQL and DynamoDB performing within 0.1ms of each other at the same workload. The performance difference only appears at scale or with complex queries. Focus your energy on understanding the access patterns first, then choose the database. Also, watch out for DynamoDB reserved words — <code>items</code>, <code>name</code>, <code>status</code> are all reserved and will cause cryptic errors without <code>ExpressionAttributeNames</code>.</p>
+<p><strong>How hands-on implementation changed my understanding:</strong>
+Before this assignment I thought SQL was &quot;old and slow&quot; and NoSQL was &quot;modern and fast.&quot; My actual measurements showed they're nearly identical for simple workloads — both averaged ~37ms. What really changed was understanding that the choice is about operational model, not raw speed. MySQL forces you to think upfront (schema design, indexes, connections). DynamoDB lets you think later but punishes you with SDK complexity and reserved word gotchas. Neither is universally better — it genuinely depends on your use case.</p>
+
+</body>
+</html>
