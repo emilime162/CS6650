@@ -1,0 +1,75 @@
+# Leader-Follower  W=1, R=5
+# Writes return as soon as the leader stores locally; replication is async.
+# Reads collect from all 5 nodes and return the highest version.
+#
+# Usage:
+#   docker compose -f docker/compose-lf-w1r5.yml up --build
+
+version: "3.9"
+
+services:
+  leader:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: leader
+      MODE: w1r5
+      PORT: "8080"
+      PEERS: "http://follower1:8080,http://follower2:8080,http://follower3:8080,http://follower4:8080"
+    ports:
+      - "8080:8080"
+    networks:
+      - kvnet
+
+  follower1:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: follower
+      PORT: "8080"
+    ports:
+      - "8081:8080"
+    networks:
+      - kvnet
+
+  follower2:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: follower
+      PORT: "8080"
+    ports:
+      - "8082:8080"
+    networks:
+      - kvnet
+
+  follower3:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: follower
+      PORT: "8080"
+    ports:
+      - "8083:8080"
+    networks:
+      - kvnet
+
+  follower4:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: follower
+      PORT: "8080"
+    ports:
+      - "8084:8080"
+    networks:
+      - kvnet
+
+networks:
+  kvnet:
+    driver: bridge

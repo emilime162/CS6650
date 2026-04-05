@@ -1,0 +1,75 @@
+# Leader-Follower  W=3, R=3  (quorum)
+# Writes wait for 3 nodes (self + 2 followers). Reads collect from 3 nodes.
+# W+R=6 > N=5, so reads always overlap the write quorum → strong consistency.
+#
+# Usage:
+#   docker compose -f docker/compose-lf-quorum.yml up --build
+
+version: "3.9"
+
+services:
+  leader:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: leader
+      MODE: quorum
+      PORT: "8080"
+      PEERS: "http://follower1:8080,http://follower2:8080,http://follower3:8080,http://follower4:8080"
+    ports:
+      - "8080:8080"
+    networks:
+      - kvnet
+
+  follower1:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: follower
+      PORT: "8080"
+    ports:
+      - "8081:8080"
+    networks:
+      - kvnet
+
+  follower2:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: follower
+      PORT: "8080"
+    ports:
+      - "8082:8080"
+    networks:
+      - kvnet
+
+  follower3:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: follower
+      PORT: "8080"
+    ports:
+      - "8083:8080"
+    networks:
+      - kvnet
+
+  follower4:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: follower
+      PORT: "8080"
+    ports:
+      - "8084:8080"
+    networks:
+      - kvnet
+
+networks:
+  kvnet:
+    driver: bridge

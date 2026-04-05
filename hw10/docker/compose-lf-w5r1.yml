@@ -1,0 +1,78 @@
+# Leader-Follower  W=5, R=1
+# Every write must reach all 5 nodes before the leader responds.
+# Reads are served from the leader's local store only (R=1).
+#
+# Usage:
+#   docker compose -f docker/compose-lf-w5r1.yml up --build
+#
+# Client writes go to http://localhost:8080  (leader)
+# Client reads  go to http://localhost:808{0-4}
+
+version: "3.9"
+
+services:
+  leader:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: leader
+      MODE: w5r1
+      PORT: "8080"
+      PEERS: "http://follower1:8080,http://follower2:8080,http://follower3:8080,http://follower4:8080"
+    ports:
+      - "8080:8080"
+    networks:
+      - kvnet
+
+  follower1:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: follower
+      PORT: "8080"
+    ports:
+      - "8081:8080"
+    networks:
+      - kvnet
+
+  follower2:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: follower
+      PORT: "8080"
+    ports:
+      - "8082:8080"
+    networks:
+      - kvnet
+
+  follower3:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: follower
+      PORT: "8080"
+    ports:
+      - "8083:8080"
+    networks:
+      - kvnet
+
+  follower4:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: follower
+      PORT: "8080"
+    ports:
+      - "8084:8080"
+    networks:
+      - kvnet
+
+networks:
+  kvnet:
+    driver: bridge

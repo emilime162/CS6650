@@ -1,0 +1,80 @@
+# Leaderless  W=N=5, R=1
+# Any node can receive any request. The receiving node coordinates writes
+# to all 4 peers before responding. Reads are local-only.
+#
+# Usage:
+#   docker compose -f docker/compose-leaderless.yml up --build
+#
+# Send reads or writes to any of ports 9080-9084.
+
+version: "3.9"
+
+services:
+  node1:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: leaderless
+      PORT: "8080"
+      PEERS: "http://node2:8080,http://node3:8080,http://node4:8080,http://node5:8080"
+    ports:
+      - "9080:8080"
+    networks:
+      - kvnet
+
+  node2:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: leaderless
+      PORT: "8080"
+      PEERS: "http://node1:8080,http://node3:8080,http://node4:8080,http://node5:8080"
+    ports:
+      - "9081:8080"
+    networks:
+      - kvnet
+
+  node3:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: leaderless
+      PORT: "8080"
+      PEERS: "http://node1:8080,http://node2:8080,http://node4:8080,http://node5:8080"
+    ports:
+      - "9082:8080"
+    networks:
+      - kvnet
+
+  node4:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: leaderless
+      PORT: "8080"
+      PEERS: "http://node1:8080,http://node2:8080,http://node3:8080,http://node5:8080"
+    ports:
+      - "9083:8080"
+    networks:
+      - kvnet
+
+  node5:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      ROLE: leaderless
+      PORT: "8080"
+      PEERS: "http://node1:8080,http://node2:8080,http://node3:8080,http://node4:8080"
+    ports:
+      - "9084:8080"
+    networks:
+      - kvnet
+
+networks:
+  kvnet:
+    driver: bridge
