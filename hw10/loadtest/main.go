@@ -178,7 +178,16 @@ func worker(
 			}
 
 		} else {
-			readURL := allNodes[rand.Intn(len(allNodes))]
+			// For leader-follower: ALL reads go to the leader.
+			// The leader handles R internally (R=1 local, R=5 fan-out, R=3 quorum).
+			// Sending reads to followers bypasses quorum logic entirely.
+			// For leaderless: reads go to any random node (R=1 local read per spec).
+			var readURL string
+			if *leaderless {
+				readURL = allNodes[rand.Intn(len(allNodes))]
+			} else {
+				readURL = *leaderURL
+			}
 
 			start := time.Now()
 			e, err := doRead(readURL, key)
