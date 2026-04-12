@@ -1,0 +1,38 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Terraform Variables Example
+# Copy this file to terraform.tfvars and fill in your values
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Required ──────────────────────────────────────────────────────────────────
+# S3 bucket name (must be globally unique)
+s3_bucket_name = "album-store-photos-REPLACE-ME"
+
+# SSH key pair name (must exist in AWS)
+key_name = "your-key-name"
+
+# ── Optional (can keep defaults) ──────────────────────────────────────────────
+aws_region         = "us-east-1"
+environment        = "dev"
+name_prefix        = "album-store"
+
+albums_table_name  = "albums"
+photos_table_name  = "photos"
+
+instance_type      = "t3.xlarge"
+go_version         = "1.21.6"
+
+# ── Automated Deployment (optional) ───────────────────────────────────────────
+# Leave git_repo_url empty for manual deployment (recommended for first setup)
+# Or provide your git repo URL for fully automated deployment:
+# git_repo_url = "https://github.com/yourusername/album-store.git"
+# git_branch   = "main"
+
+git_repo_url = ""
+git_branch   = "main"
+
+# ── Network Access ────────────────────────────────────────────────────────────
+# Allow API access from anywhere (use specific CIDR blocks for production)
+allowed_cidr_blocks = ["0.0.0.0/0"]
+
+# Allow SSH from anywhere (restrict to your IP for production)
+ssh_cidr_blocks = ["0.0.0.0/0"]

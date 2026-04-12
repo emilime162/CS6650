@@ -1,0 +1,34 @@
+[Unit]
+Description=Album Store — CS 6650 ChaosArena service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=ec2-user
+WorkingDirectory=/home/ec2-user
+
+ExecStart=/home/ec2-user/album-store
+
+Restart=always
+RestartSec=1
+
+# Graceful shutdown
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=10
+
+# Environment
+Environment=PORT=8080
+Environment=AWS_REGION=us-west-2
+Environment=ALBUMS_TABLE=albums
+Environment=PHOTOS_TABLE=photos
+Environment=S3_BUCKET=album-store-photos-chen-20260412
+Environment=WORKER_COUNT=256
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+[Install]
+WantedBy=multi-user.target

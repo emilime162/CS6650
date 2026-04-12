@@ -1,0 +1,134 @@
+# Album Store — CS 6650 ChaosArena v1
+
+Go REST API for the `v1-album-store` contract.
+
+## Architecture
+
+| Layer | Choice | Why |
+|-------|--------|-----|
+| HTTP | Go + Chi | fast, minimal allocations |
+| Metadata | DynamoDB (PAY_PER_REQUEST) | no connection limits; atomic counters built-in |
+| File storage | S3 + Transfer Manager | multipart upload for large files (S15) |
+| Async processing | In-process goroutine pool | avoids SQS round-trip; lowest POST→completed latency |
+
+---
+
+## Quick Start
+
+### 1. Prerequisites
+
+- Go 1.21+
+- AWS CLI configured (`aws configure` or instance role)
+- An EC2 instance (recommend **t3.xlarge** or larger for S15 large uploads)
+- EC2 IAM role with: `dynamodb:*` on your tables, `s3:*` on your bucket
+
+### 2. Create AWS Resources
+
+```bash
+chmod +x setup.sh
+./setup.sh
+# Note the export lines printed at the end — you'll need them in step 5.
+```
+
+### 3. Install Go on EC2 (if not already)
+
+```bash
+# On the EC2 instance:
+wget https://go.dev/dl/go1.21.6.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.21.6.linux-amd64.tar.gz
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+source ~/.bashrc
+go version
+```
+
+### 4. Get dependencies and build
+
+```bash
+# From the project directory:
+go mod tidy          # downloads dependencies, writes go.sum
+make build-linux     # cross-compile for EC2 → ./bin/album-store
+```
+
+Or build directly on EC2 after uploading source:
+```bash
+go build -ldflags="-s -w" -o album-store .
+```
+
+### 5. Configure environment on EC2
+
+Edit `album-store.service` and fill in the values printed by `setup.sh`:
+
+```ini
+Environment=AWS_REGION=us-east-1
+Environment=ALBUMS_TABLE=albums
+Environment=PHOTOS_TABLE=photos
+Environment=S3_BUCKET=album-store-photos-XXXXXXX   # ← your bucket name
+```
+
+### 6. Deploy
+
+```bash
+make deploy HOST=ec2-user@<your-ec2-public-ip> KEY=~/.ssh/YourKey.pem
+```
+
+This SCP's the binary + service file, enables the systemd unit, and starts the service.
+
+Verify it's running:
+```bash
+ssh -i ~/.ssh/YourKey.pem ec2-user@<ip> "sudo journalctl -u album-store -n 50"
+curl http://<ip>:8080/health
+# → {"status":"ok"}
+```
+
+### 7. Open port 8080
+
+In the EC2 Security Group, add an inbound rule: **TCP 8080 from 0.0.0.0/0**.
+
+---
+
+## Submit to ChaosArena
+
+```bash
+curl -X POST https://chaosarena-alb-938452724.us-west-2.elb.amazonaws.com/submit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email":    "you@northeastern.edu",
+    "nickname": "your-nickname",
+    "base_url": "http://<your-ec2-public-ip>:8080",
+    "contract": "v1-album-store"
+  }'
+```
+
+Poll for results:
+```bash
+curl https://chaosarena-alb-938452724.us-west-2.elb.amazonaws.com/runs/<run_id>
+```
+
+---
+
+## Endpoint Summary
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | /health | Health check |
+| PUT | /albums/:album_id | Create or update album |
+| GET | /albums/:album_id | Get album |
+| GET | /albums | List all albums |
+| POST | /albums/:album_id/photos | Upload photo (async, returns 202) |
+| GET | /albums/:album_id/photos/:photo_id | Get photo status |
+| DELETE | /albums/:album_id/photos/:photo_id | Delete photo + file |
+
+---
+
+## Tuning
+
+| Env var | Default | Notes |
+|---------|---------|-------|
+| PORT | 8080 | HTTP listen port |
+| WORKER_COUNT | NumCPU × 16 | Background upload goroutines |
+| ALBUMS_TABLE | albums | DynamoDB table name |
+| PHOTOS_TABLE | photos | DynamoDB table name |
+| S3_BUCKET | (required) | S3 bucket name |
+| AWS_REGION | from SDK | AWS region |
+
+For heavier load (S15), bump to a **c5.2xlarge** or **m5.2xlarge** instance.
